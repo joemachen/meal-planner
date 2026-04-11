@@ -1,0 +1,33 @@
+{
+  "name": "vibemeal-house",
+  "version": "1.0.0",
+  "description": "Meal planning and grocery management for Windows",
+  "main": "dist-electron/main/index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:dist": "vite build && node scripts/copy-schema.js && electron-builder --win --publish=never",
+    "preview": "vite preview",
+    "postinstall": "electron-rebuild -f -w better-sqlite3"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.6.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/node": "^22.10.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^28.2.0",
+    "electron-builder": "^25.1.8",
+    "electron-rebuild": "^3.2.9",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.10",
+    "vite-plugin-electron": "^0.28.0",
+    "vite-plugin-electron-renderer": "^0.14.6"
+  }
+}

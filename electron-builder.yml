@@ -1,0 +1,17 @@
+appId: com.mealplanner.app
+productName: Meal & Shopping Planner
+copyright: "Copyright © 2026"
+asar: true
+asarUnpack:
+  - "**/*.node"
+directories:
+  output: release
+  buildResources: build
+win:
+  target:
+    - target: portable
+      arch: [x64]
+  icon: build/icon.ico
+portable:
+  artifactName: "MealPlanner-${version}-portable.exe"
+npmRebuild: true

@@ -1,0 +1,26 @@
+# VibeMeal & House — Cursor Rules
+
+## Before Every Coding Session
+
+1. **Read `logs/errors.log`** — Do not repeat past mistakes; fix or avoid known failure patterns.
+2. **Read this file and `ARCHITECTURE.md` / `TECH_STACK.md`** — Follow current structure, data flow, and tech choices.
+
+## Project Standards
+
+- **No shortcuts**: Environment and logging must be in place before business logic. Use `run.bat` for clean launch.
+- **Logging**: All detailed output goes to `logs/app.log`; full stack traces to `logs/errors.log`. Console shows only critical status.
+- **Errors**: On any error in main process, log full stack trace to `logs/errors.log` with timestamp.
+- **Docs**: Update `TECH_STACK.md` and `ARCHITECTURE.md` whenever file structure or logic flow changes.
+- **SOLID / DRY / modular**: Prefer small modules, single responsibility, shared types and DB layer in main.
+
+## Stack
+
+- Electron (main) + React + Vite (renderer), TypeScript, SQLite (better-sqlite3), Winston.
+- See `TECH_STACK.md` for versions and rationale.
+
+## Data
+
+- Meals: title + ingredients (name + quantity, e.g. 1x sugar). No metadata.
+- Calendar: Sat–Fri, lunch/dinner; slot = meal from library | Dine out / Order in / Leftovers | free text.
+- Essentials: name + "Include in next list" (active) toggle; CRUD.
+- Shopping list: Aggregated ingredients (grouped, quantities combined) + active essentials; plain text, copy, export.

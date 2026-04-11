@@ -1,0 +1,125 @@
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-blur: 16px;
+  --surface: rgba(255, 255, 255, 0.06);
+  --text: #e8e8e8;
+  --text-muted: #a0a0a0;
+  --accent: #7dd3fc;
+  --accent-hover: #bae6fd;
+  --danger: #f87171;
+  --success: #4ade80;
+  --radius: 12px;
+  --font-sans: 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: linear-gradient(145deg, #1a1b26 0%, #16161e 50%, #0f0f14 100%);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Liquid glass panels */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  background: var(--glass-bg);
+  color: var(--text);
+  border: 1px solid var(--glass-border);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+button.primary {
+  background: var(--accent);
+  color: #0c4a6e;
+  border-color: transparent;
+}
+
+button.primary:hover {
+  background: var(--accent-hover);
+}
+
+button.danger {
+  background: var(--danger);
+  color: #fff;
+  border-color: transparent;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px 12px 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.tabs button {
+  padding: 10px 18px;
+  border-radius: 8px 8px 0 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: none;
+  color: var(--text-muted);
+}
+
+.tabs button.active {
+  background: var(--glass-bg);
+  color: var(--text);
+  border-color: var(--glass-border);
+}
+
+.tab-panel {
+  flex: 1;
+  overflow: auto;
+  padding: 20px;
+}

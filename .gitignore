@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+dist-electron/
+release/
+
+# Database (personal data — users have their own)
+data/
+
+# Logs
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.cursor/
+.vscode/
+*.suo
+*.user
+
+# Env
+.env
+.env.*
