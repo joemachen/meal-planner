@@ -156,11 +156,7 @@ export function getDb(): Database.Database {
       for (const row of DEFAULT_CATEGORIES) ins.run(row.name, row.emoji, row.sortOrder)
       logger.info('Seeded default categories')
     }
-    const mealCount = db.prepare('SELECT COUNT(*) as c FROM meals').get() as { c: number }
-    if (mealCount.c === 0) seedDefaultMeals(db)
-    const essCount = db.prepare('SELECT COUNT(*) as c FROM essentials').get() as { c: number }
-    if (essCount.c === 0) seedDefaultEssentials(db)
-    // Migration: add categoryId to essentials if missing
+    // Migration: add categoryId to essentials if missing (must run before seed)
     try {
       const tableInfo = db.prepare('PRAGMA table_info(essentials)').all() as { name: string }[]
       if (!tableInfo.some((c) => c.name === 'categoryId')) {
@@ -170,6 +166,10 @@ export function getDb(): Database.Database {
         logger.info('Migration: added essentials.categoryId')
       }
     } catch (e) { logger.error('Migration failed', { error: e }) }
+    const mealCount = db.prepare('SELECT COUNT(*) as c FROM meals').get() as { c: number }
+    if (mealCount.c === 0) seedDefaultMeals(db)
+    const essCount = db.prepare('SELECT COUNT(*) as c FROM essentials').get() as { c: number }
+    if (essCount.c === 0) seedDefaultEssentials(db)
     logger.info('Database opened', { path: dbPath })
   }
   return db
