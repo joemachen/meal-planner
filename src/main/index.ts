@@ -163,7 +163,8 @@ app.whenReady().then(() => {
     const stack = err instanceof Error ? err.stack : undefined
     logger.error('Startup failed', { error: message, stack })
     logErrorToErrorsFile(`Startup failed: ${message}`, stack)
-    throw err
+    dialog.showErrorBox('Meal Planner — Startup Failed', `${message}\n\n${stack ?? ''}`)
+    app.exit(1)
   }
 }).catch((err) => {
   const message = err instanceof Error ? err.message : String(err)
@@ -182,9 +183,9 @@ process.on('uncaughtException', (err) => {
     logger.error('Uncaught exception', { error: err.message, stack: err.stack })
     logErrorToErrorsFile(err.message, err.stack)
   } catch {
-    const logFile = path.join(process.cwd(), 'logs', 'errors.log')
-    try { fs.appendFileSync(logFile, `${new Date().toISOString()} Uncaught: ${err.message}\n${err.stack}\n`) } catch { /* ignore */ }
+    // logger not available — write directly
   }
+  dialog.showErrorBox('Meal Planner — Unexpected Error', `${err.message}\n\n${err.stack ?? ''}`)
   process.exit(1)
 })
 

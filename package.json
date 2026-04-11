@@ -1,6 +1,6 @@
 {
   "name": "vibemeal-house",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Meal planning and grocery management for Windows",
   "main": "dist-electron/main/index.js",
   "scripts": {

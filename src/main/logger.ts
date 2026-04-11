@@ -1,9 +1,18 @@
 import path from 'path'
 import fs from 'fs'
+import { app } from 'electron'
 import winston from 'winston'
 
-// Prefer project-root logs/ (run.bat runs from repo root)
-const logsDir = path.join(process.cwd(), 'logs')
+// In production, write to %APPDATA%\Meal & Shopping Planner\logs\
+// In dev, write to project root logs\
+function getLogsDir(): string {
+  if (app.isPackaged) {
+    return path.join(app.getPath('userData'), 'logs')
+  }
+  return path.join(process.cwd(), 'logs')
+}
+
+const logsDir = getLogsDir()
 try {
   fs.mkdirSync(logsDir, { recursive: true })
 } catch {
