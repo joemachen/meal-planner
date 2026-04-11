@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { WeeklyCalendar } from './components/calendar/WeeklyCalendar'
 import { MealLibrary } from './components/meals/MealLibrary'
 import { HouseholdEssentials } from './components/essentials/HouseholdEssentials'
@@ -16,41 +16,43 @@ const TABS = [
 ] as const
 
 type TabId = (typeof TABS)[number]['id']
+export type Theme = 'dark' | 'light'
+
+function getInitialTheme(): Theme {
+  const stored = localStorage.getItem('theme')
+  if (stored === 'dark' || stored === 'light') return stored
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
 
 function App() {
   const [activeTab, setActiveTab] = useState<TabId>('calendar')
+  const [theme, setTheme] = useState<Theme>(getInitialTheme)
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('theme', theme)
+  }, [theme])
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <header
-        className="glass"
-        style={{
-          padding: '10px 16px 10px 12px',
-          borderBottom: '1px solid var(--glass-border)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          WebkitAppRegion: 'drag',
-          appRegion: 'drag',
-        }}
-      >
-        <h1 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>Meal & Shopping Planner</h1>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4, WebkitAppRegion: 'no-drag', appRegion: 'no-drag' }}>
+      <header className="app-header">
+        <h1>Meal &amp; Shopping Planner</h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <button
             type="button"
+            className="win-btn"
             onClick={() => typeof window.vibemeal?.window?.minimize === 'function' && window.vibemeal.window.minimize()}
-            style={{ width: 36, height: 28, padding: 0, fontSize: 16, lineHeight: 1 }}
             title="Minimize"
           >
-            –
+            &#8211;
           </button>
           <button
             type="button"
+            className="win-btn win-close"
             onClick={() => typeof window.vibemeal?.window?.close === 'function' && window.vibemeal.window.close()}
-            style={{ width: 36, height: 28, padding: 0, fontSize: 16, lineHeight: 1, color: 'var(--text)' }}
             title="Close"
           >
-            ×
+            &#215;
           </button>
         </div>
       </header>
@@ -71,7 +73,7 @@ function App() {
         {activeTab === 'meals' && <MealLibrary />}
         {activeTab === 'essentials' && <HouseholdEssentials />}
         {activeTab === 'shopping' && <ShoppingList />}
-        {activeTab === 'settings' && <Settings />}
+        {activeTab === 'settings' && <Settings theme={theme} setTheme={setTheme} />}
         {activeTab === 'instructions' && <Instructions />}
       </main>
     </div>

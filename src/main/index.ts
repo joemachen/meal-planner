@@ -1,6 +1,6 @@
 import path from 'path'
 import fs from 'fs'
-import { app, BrowserWindow, ipcMain, dialog } from 'electron'
+import { app, BrowserWindow, screen, ipcMain, dialog } from 'electron'
 import { logger, logErrorToErrorsFile } from './logger'
 import { getDb, getDbPathForSettings, closeDb } from './db'
 import * as categoriesDb from './db/categories'
@@ -13,9 +13,13 @@ import * as shoppingDb from './db/shopping'
 let mainWindow: BrowserWindow | null = null
 
 function createWindow(): void {
+  const { width: sw, height: sh } = screen.getPrimaryDisplay().workAreaSize
+  const winWidth = Math.min(1200, Math.round(sw * 0.9))
+  const winHeight = Math.round(sh * 0.8)
+
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: winWidth,
+    height: winHeight,
     minWidth: 800,
     minHeight: 600,
     frame: false,

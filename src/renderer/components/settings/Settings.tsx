@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react'
 import type { Category } from '../../types'
+import type { Theme } from '../../App'
 
-export function Settings() {
+interface SettingsProps {
+  theme: Theme
+  setTheme: (t: Theme) => void
+}
+
+export function Settings({ theme, setTheme }: SettingsProps) {
   const [dbPath, setDbPath] = useState<string>('')
   const [categories, setCategories] = useState<Category[]>([])
   const [editingId, setEditingId] = useState<number | null>(null)
@@ -92,6 +98,29 @@ export function Settings() {
   return (
     <div className="glass" style={{ padding: 24, width: '100%', boxSizing: 'border-box' }}>
       <h2 style={{ marginTop: 0 }}>Settings</h2>
+
+      <section style={{ marginBottom: 32 }}>
+        <h3 style={{ marginBottom: 8 }}>Appearance</h3>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <button
+            type="button"
+            className={theme === 'dark' ? 'primary' : ''}
+            onClick={() => setTheme('dark')}
+          >
+            🌙 Dark
+          </button>
+          <button
+            type="button"
+            className={theme === 'light' ? 'primary' : ''}
+            onClick={() => setTheme('light')}
+          >
+            ☀️ Light
+          </button>
+        </div>
+        <p style={{ color: 'var(--text-muted)', fontSize: 13, marginTop: 8 }}>
+          Default follows your OS setting. Your choice is saved for next launch.
+        </p>
+      </section>
 
       <section style={{ marginBottom: 32 }}>
         <h3 style={{ marginBottom: 8 }}>Data</h3>
