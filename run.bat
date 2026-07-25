@@ -20,5 +20,5 @@ if not exist "node_modules" (
 
 :: Start app (Vite + Electron); only critical status to console
 echo [VibeMeal] Starting...
-call npm run start
+call npm run dev
 endlocal
